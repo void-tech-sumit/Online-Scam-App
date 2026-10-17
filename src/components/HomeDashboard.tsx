@@ -45,23 +45,15 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   return (
     <div className="space-y-8 pb-12">
       {/* Hero Welcome Banner */}
-      <section className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-2xl p-6 sm:p-10 shadow-xl relative overflow-hidden border border-slate-800">
-        <div className="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 w-64 h-64 items-center justify-center p-3 bg-white/5 rounded-2xl backdrop-blur-xs border border-white/10 shadow-2xl">
-          <img
-            src="/scamshield-logo.svg"
-            alt="ScamShield Logo"
-            className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
-          />
-        </div>
+      <section className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 lg:p-10 shadow-xl relative overflow-hidden border border-slate-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          <div className="lg:col-span-8 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-blue-300 uppercase">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+                <span>National Banking Cyber Safety Network · Public & Institutional Vigilance</span>
+              </div>
 
-        <div className="relative z-10 max-w-2xl lg:max-w-xl space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-blue-300 uppercase">
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span>National Banking Cyber Safety Network · Public & Institutional Vigilance</span>
-            </div>
-
-            <div className="flex items-center gap-2">
               {onOpenLogoSelector && (
                 <button
                   onClick={onOpenLogoSelector}
@@ -73,71 +65,82 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 </button>
               )}
             </div>
+
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div
+                onClick={onOpenLogoSelector}
+                className="cursor-pointer group relative shrink-0"
+                title="Click to change logo"
+              >
+                <ScamShieldLogo
+                  styleId={logoStyle}
+                  customImageUrl={customLogoUrl}
+                  size="md"
+                  className="sm:w-16 sm:h-16 group-hover:scale-105 transition-transform"
+                />
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white font-serif leading-tight">
+                  ScamShield – Online Scam Protection System
+                </h1>
+              </div>
+            </div>
+
+            <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
+              An institutional cyber fraud prevention platform providing real-time heuristic analysis for suspicious SMS messages, deceptive banking links, and centralized vigilance reporting for account holders and bank officers.
+            </p>
+
+            {/* Feature Badges */}
+            <div className="flex flex-wrap gap-2 text-[11px] text-slate-300 pt-1">
+              <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
+                ✓ Heuristic SMS & Message Scanner
+              </span>
+              <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
+                ✓ Phishing URL & Domain Inspector
+              </span>
+              <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
+                ✓ Bank Employee Vigilance Console
+              </span>
+              <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
+                ✓ 24x7 1930 Cybercrime Coordination
+              </span>
+            </div>
+
+            {/* Quick Action Buttons */}
+            <div className="pt-2 flex flex-wrap gap-3">
+              <button
+                onClick={() => onNavigate('check-message')}
+                className="w-full sm:w-auto bg-white hover:bg-blue-50 text-blue-950 font-semibold px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm cursor-pointer hover:shadow-lg"
+              >
+                <MessageSquareWarning className="w-4 h-4 text-blue-700 shrink-0" />
+                <span>Check Suspicious Message</span>
+              </button>
+              <button
+                onClick={() => onNavigate('check-link')}
+                className="w-full sm:w-auto bg-blue-700/80 hover:bg-blue-600 text-white font-medium px-5 py-2.5 rounded-xl border border-blue-400/30 transition-all flex items-center justify-center gap-2 text-sm cursor-pointer"
+              >
+                <Link2 className="w-4 h-4 text-blue-200 shrink-0" />
+                <span>Scan Suspicious Link</span>
+              </button>
+              <button
+                onClick={() => onNavigate('report-scam')}
+                className="w-full sm:w-auto bg-slate-900/60 hover:bg-slate-900 text-blue-100 font-medium px-5 py-2.5 rounded-xl border border-blue-500/30 transition-all flex items-center justify-center gap-2 text-sm cursor-pointer"
+              >
+                <FileText className="w-4 h-4 text-amber-300 shrink-0" />
+                <span>Report a Scam</span>
+              </button>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div
-              onClick={onOpenLogoSelector}
-              className="cursor-pointer group relative"
-              title="Click to change logo"
-            >
-              <ScamShieldLogo
-                styleId={logoStyle}
-                customImageUrl={customLogoUrl}
-                size="lg"
-                className="group-hover:scale-105 transition-transform"
+          {/* Right Logo Display */}
+          <div className="hidden lg:flex lg:col-span-4 items-center justify-center">
+            <div className="w-56 h-56 xl:w-64 xl:h-64 flex items-center justify-center p-4 bg-white/5 rounded-2xl backdrop-blur-xs border border-white/10 shadow-2xl">
+              <img
+                src="/scamshield-logo.svg"
+                alt="ScamShield Logo"
+                className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white font-serif leading-tight">
-                ScamShield – Online Scam Protection System
-              </h1>
-            </div>
-          </div>
-
-          <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
-            An institutional cyber fraud prevention platform providing real-time heuristic analysis for suspicious SMS messages, deceptive banking links, and centralized vigilance reporting for account holders and bank officers.
-          </p>
-
-          {/* Feature Badges */}
-          <div className="flex flex-wrap gap-2 text-[11px] text-slate-300 pt-1">
-            <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
-              ✓ Heuristic SMS & Message Scanner
-            </span>
-            <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
-              ✓ Phishing URL & Domain Inspector
-            </span>
-            <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
-              ✓ Bank Employee Vigilance Console
-            </span>
-            <span className="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-md">
-              ✓ 24x7 1930 Cybercrime Coordination
-            </span>
-          </div>
-
-          {/* Quick Action Buttons */}
-          <div className="pt-2 flex flex-wrap gap-3">
-            <button
-              onClick={() => onNavigate('check-message')}
-              className="bg-white hover:bg-blue-50 text-blue-950 font-semibold px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-2 text-sm cursor-pointer hover:shadow-lg"
-            >
-              <MessageSquareWarning className="w-4 h-4 text-blue-700" />
-              <span>Check Suspicious Message</span>
-            </button>
-            <button
-              onClick={() => onNavigate('check-link')}
-              className="bg-blue-700/80 hover:bg-blue-600 text-white font-medium px-5 py-2.5 rounded-xl border border-blue-400/30 transition-all flex items-center gap-2 text-sm cursor-pointer"
-            >
-              <Link2 className="w-4 h-4 text-blue-200" />
-              <span>Scan Suspicious Link</span>
-            </button>
-            <button
-              onClick={() => onNavigate('report-scam')}
-              className="bg-slate-900/60 hover:bg-slate-900 text-blue-100 font-medium px-5 py-2.5 rounded-xl border border-blue-500/30 transition-all flex items-center gap-2 text-sm cursor-pointer"
-            >
-              <FileText className="w-4 h-4 text-amber-300" />
-              <span>Report a Scam</span>
-            </button>
           </div>
         </div>
       </section>

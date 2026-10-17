@@ -77,6 +77,7 @@ export const LinkChecker: React.FC<LinkCheckerProps> = ({
           <div className="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
             <Link2 className="w-6 h-6" />
           </div>
+          <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-2xl font-bold text-slate-900 font-serif">Suspicious Link & URL Checker</h1>
               <span className="text-xs bg-indigo-100 text-indigo-800 font-semibold px-2.5 py-0.5 rounded-full">
@@ -86,6 +87,7 @@ export const LinkChecker: React.FC<LinkCheckerProps> = ({
             <p className="text-sm text-slate-600 mt-1 leading-relaxed">
               Enter any website address to inspect for warning signs like unencrypted HTTP connections, lookalike banking domains, disguised URL shorteners, and high-risk domain extensions.
             </p>
+          </div>
         </div>
 
         {/* Preset Sample URLs */}

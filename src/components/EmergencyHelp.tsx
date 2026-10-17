@@ -87,25 +87,25 @@ export const EmergencyHelp: React.FC = () => {
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <a
               href="tel:1930"
-              className="bg-white hover:bg-rose-50 text-rose-950 font-black px-6 py-3 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center gap-2 text-sm sm:text-base"
+              className="w-full sm:w-auto bg-white hover:bg-rose-50 text-rose-950 font-black px-6 py-3 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center justify-center gap-2 text-sm sm:text-base"
             >
-              <PhoneCall className="w-5 h-5 text-rose-600" />
+              <PhoneCall className="w-5 h-5 text-rose-600 shrink-0" />
               <span>Call Helpline 1930 (Toll-Free)</span>
             </a>
 
             <button
               onClick={() => copyToClipboard('1930', 'helpline-1930')}
-              className="bg-rose-800/80 hover:bg-rose-700 text-white font-semibold px-4 py-3 rounded-xl border border-rose-400/40 transition-colors flex items-center gap-2 text-sm cursor-pointer"
+              className="w-full sm:w-auto bg-rose-800/80 hover:bg-rose-700 text-white font-semibold px-4 py-3 rounded-xl border border-rose-400/40 transition-colors flex items-center justify-center gap-2 text-sm cursor-pointer"
               title="Copy Helpline 1930"
             >
               {copiedText === 'helpline-1930' ? (
                 <>
-                  <Check className="w-4 h-4 text-emerald-400" />
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="text-emerald-300">Copied 1930</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4" />
+                  <Copy className="w-4 h-4 shrink-0" />
                   <span>Copy 1930</span>
                 </>
               )}
@@ -115,9 +115,9 @@ export const EmergencyHelp: React.FC = () => {
               href="https://cybercrime.gov.in"
               target="_blank"
               rel="noreferrer"
-              className="bg-rose-800/80 hover:bg-rose-700 text-white font-semibold px-5 py-3 rounded-xl border border-rose-400/40 transition-colors flex items-center gap-2 text-sm"
+              className="w-full sm:w-auto bg-rose-800/80 hover:bg-rose-700 text-white font-semibold px-5 py-3 rounded-xl border border-rose-400/40 transition-colors flex items-center justify-center gap-2 text-sm"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4 shrink-0" />
               <span>Visit cybercrime.gov.in Portal</span>
             </a>
           </div>
