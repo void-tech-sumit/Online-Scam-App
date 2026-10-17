@@ -1,0 +1,7 @@
+{
+  "name": "ScamShield – Online Scam Protection System",
+  "description": "A professional banking fraud prevention and scam detection platform for customers and bank employees, featuring message/link heuristic checkers, safety advisories, reporting, and emergency cybercrime helplines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
