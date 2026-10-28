@@ -15,7 +15,7 @@ import { EmergencyHelp } from './components/EmergencyHelp';
 import { ProjectGuideModal } from './components/ProjectGuideModal';
 import { LogoSelectorModal } from './components/LogoSelectorModal';
 import { LogoStyleId, ScamShieldLogo } from './components/ScamShieldLogo';
-import { INITIAL_REPORTS, INITIAL_SCAM_ALERTS } from './data/mockData';
+import { INITIAL_AUTHORIZED_STAFF, INITIAL_REPORTS, INITIAL_SCAM_ALERTS } from './data/mockData';
 import { EmployeeUser, ReportStatus, ScamAlert, ScamReport } from './types';
 import { ShieldCheck, PhoneCall, Building2, ExternalLink, Info, Heart, Palette } from 'lucide-react';
 
@@ -47,7 +47,44 @@ export default function App() {
   // Application State
   const [reports, setReports] = useState<ScamReport[]>(INITIAL_REPORTS);
   const [alerts, setAlerts] = useState<ScamAlert[]>(INITIAL_SCAM_ALERTS);
+  const [staffAccounts, setStaffAccounts] = useState<EmployeeUser[]>(INITIAL_AUTHORIZED_STAFF);
   const [employeeUser, setEmployeeUser] = useState<EmployeeUser | null>(null);
+  const [adminOriginalSession, setAdminOriginalSession] = useState<EmployeeUser | null>(null);
+
+  // Impersonation & Auth handlers
+  const handleLogout = () => {
+    setEmployeeUser(null);
+    setAdminOriginalSession(null);
+  };
+
+  const handleStartImpersonation = (targetOfficer: EmployeeUser) => {
+    // If Admin is inspecting this officer's desk
+    if (!adminOriginalSession && employeeUser?.roleType === 'super_admin') {
+      setAdminOriginalSession(employeeUser);
+    }
+    setEmployeeUser(targetOfficer);
+  };
+
+  const handleExitImpersonation = () => {
+    if (adminOriginalSession) {
+      setEmployeeUser(adminOriginalSession);
+      setAdminOriginalSession(null);
+    }
+  };
+
+  const handleUpdateStaffStatus = (staffId: string, status: 'active' | 'suspended') => {
+    setStaffAccounts((prev) =>
+      prev.map((s) => (s.id === staffId ? { ...s, status } : s))
+    );
+  };
+
+  const handleAddStaff = (newStaff: EmployeeUser) => {
+    setStaffAccounts((prev) => [newStaff, ...prev]);
+  };
+
+  const handleDeletePublicAlert = (alertId: string) => {
+    setAlerts((prev) => prev.filter((a) => a.id !== alertId));
+  };
 
   // Handler: Add new scam report from customer form
   const handleAddReport = (
@@ -113,6 +150,7 @@ export default function App() {
         currentTab={currentTab}
         onSelectTab={setCurrentTab}
         employeeUser={employeeUser}
+        isImpersonating={!!adminOriginalSession}
         onOpenProjectGuide={() => setIsProjectGuideOpen(true)}
         logoStyle={logoStyle}
         customLogoUrl={customLogoUrl}
@@ -160,10 +198,19 @@ export default function App() {
           <EmployeeDashboard
             employeeUser={employeeUser}
             onLogin={setEmployeeUser}
-            onLogout={() => setEmployeeUser(null)}
+            onLogout={handleLogout}
             reports={reports}
+            alerts={alerts}
             onUpdateReportStatus={handleUpdateReportStatus}
             onAddPublicAlert={handleAddPublicAlert}
+            onDeletePublicAlert={handleDeletePublicAlert}
+            staffList={staffAccounts}
+            onUpdateStaffStatus={handleUpdateStaffStatus}
+            onAddStaff={handleAddStaff}
+            isImpersonating={!!adminOriginalSession}
+            originalAdminUser={adminOriginalSession}
+            onStartImpersonation={handleStartImpersonation}
+            onExitImpersonation={handleExitImpersonation}
           />
         )}
 

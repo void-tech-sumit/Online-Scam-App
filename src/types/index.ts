@@ -75,6 +75,8 @@ export interface ScamReport {
   officialGuidance?: string;
   reviewedBy?: string;
   reviewedAt?: string;
+  assignedBank?: string;
+  assignedOfficerId?: string;
 }
 
 export interface ScamAlert {
@@ -120,10 +122,20 @@ export interface BankContact {
   fraudEmail: string;
 }
 
+export type UserRoleType = 'bank_employee' | 'super_admin';
+
 export interface EmployeeUser {
   id: string;
   name: string;
   role: string;
+  roleType: UserRoleType;
+  bankName: string;
   branch: string;
   employeeId: string;
+  password?: string;
+  email?: string;
+  phone?: string;
+  status: 'active' | 'suspended';
+  assignedCasesCount?: number;
+  lastLogin?: string;
 }

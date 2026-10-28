@@ -7,6 +7,7 @@ interface HeaderProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
   employeeUser: EmployeeUser | null;
+  isImpersonating?: boolean;
   onOpenProjectGuide: () => void;
   logoStyle: LogoStyleId;
   customLogoUrl?: string;
@@ -17,6 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentTab,
   onSelectTab,
   employeeUser,
+  isImpersonating,
   onOpenProjectGuide,
   logoStyle,
   customLogoUrl,
@@ -119,18 +121,36 @@ export const Header: React.FC<HeaderProps> = ({
             })}
           </nav>
 
-          {/* Right Header Action Buttons (Employee Desk & Emergency Helpline) */}
+          {/* Right Header Action Buttons (Employee/Admin Desk & Emergency Helpline) */}
           <div className="hidden md:flex items-center gap-2.5 shrink-0">
             {employeeUser ? (
               <div
                 onClick={() => onSelectTab('employee')}
-                className="flex items-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3 py-1.5 rounded-lg text-emerald-200 text-xs cursor-pointer hover:bg-emerald-900/60 transition-colors"
-                title="Click to open Employee Desk"
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs cursor-pointer transition-colors border ${
+                  isImpersonating
+                    ? 'bg-amber-950/80 border-amber-500/80 text-amber-200 hover:bg-amber-900/60'
+                    : employeeUser.roleType === 'super_admin'
+                    ? 'bg-indigo-950/80 border-indigo-500/80 text-indigo-200 hover:bg-indigo-900/60'
+                    : 'bg-emerald-950/80 border-emerald-700/60 text-emerald-200 hover:bg-emerald-900/60'
+                }`}
+                title={isImpersonating ? 'Admin Impersonation Mode' : employeeUser.roleType === 'super_admin' ? 'Super Admin Directorate' : 'Click to open Bank Desk'}
               >
-                <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                {employeeUser.roleType === 'super_admin' && !isImpersonating ? (
+                  <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0" />
+                ) : (
+                  <UserCheck className={`w-4 h-4 shrink-0 ${isImpersonating ? 'text-amber-400' : 'text-emerald-400'}`} />
+                )}
                 <div className="text-left leading-tight">
-                  <div className="font-semibold text-emerald-100 truncate max-w-[110px]">{employeeUser.name}</div>
-                  <div className="text-[10px] text-emerald-300">Bank Fraud Desk</div>
+                  <div className={`font-semibold truncate max-w-[130px] ${
+                    isImpersonating ? 'text-amber-100' : employeeUser.roleType === 'super_admin' ? 'text-indigo-100' : 'text-emerald-100'
+                  }`}>
+                    {employeeUser.name}
+                  </div>
+                  <div className={`text-[10px] ${
+                    isImpersonating ? 'text-amber-300 font-mono' : employeeUser.roleType === 'super_admin' ? 'text-indigo-300' : 'text-emerald-300'
+                  }`}>
+                    {isImpersonating ? 'Admin Auditing' : employeeUser.roleType === 'super_admin' ? 'Super Admin' : employeeUser.bankName.slice(0, 16)}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -143,7 +163,7 @@ export const Header: React.FC<HeaderProps> = ({
                 }`}
               >
                 <UserCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span>Bank Staff Login</span>
+                <span>Bank / Admin Login</span>
               </button>
             )}
 
@@ -216,7 +236,11 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <UserCheck className="w-4 h-4 text-emerald-400" />
-              <span>{employeeUser ? `Employee Desk (${employeeUser.name})` : 'Bank Staff Login'}</span>
+              <span>
+                {employeeUser
+                  ? `${employeeUser.roleType === 'super_admin' ? '🛡️ Super Admin' : '🏛️ Bank Desk'}: ${employeeUser.name}`
+                  : 'Bank / Admin Login'}
+              </span>
             </button>
             <button
               onClick={() => handleNavClick('emergency')}
